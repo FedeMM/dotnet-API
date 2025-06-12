@@ -1,3 +1,4 @@
+using Azure.Identity;
 using Backend.Automappers;
 using Backend.DTOs;
 using Backend.Models;
@@ -55,6 +56,10 @@ builder.Services.AddHttpClient<IPostsService, PostsService>(c =>
 {
     c.BaseAddress = new Uri(builder.Configuration["BaseUrlPosts"]);
 });
+
+builder.Configuration.AddAzureKeyVault(
+    new Uri("https://beer-store-vault.vault.azure.net/"),
+    new DefaultAzureCredential());
 
 //Repositry
 builder.Services.AddScoped<IRepository<Beer>,BeerRepository>();
